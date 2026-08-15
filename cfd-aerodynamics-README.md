@@ -24,6 +24,7 @@ Three rectangular wings (NACA 2415 airfoil, no twist/dihedral, 1 m chord) were m
 | 3a | 15 |
 
 ![AR Comparison Charts](images/Cl-vs-Alpha-Graph.png)
+![AR Efficiency Comparison Charts](images/efficiency-graph.png)
 
 **At 5° angle of attack:**
 
@@ -52,6 +53,7 @@ Three tapered wings (AR = 10, NACA 2415, 1 m root chord) were analyzed the same 
 | 3b | 1.0 (rectangular baseline) |
 
 ![Taper Ratio Comparison Charts](images/Cl-vs-Alpha-Tapered-Graph.png)
+![Efficiency Taper Comparison Charts](images/efficiency-vs-AoA-Graph-Tapered.png)
 
 **Lift curve slope**, XFLR5 vs. theoretical — agreement was much tighter here than in Part A, within ~2% across all three taper ratios.
 
@@ -83,7 +85,10 @@ Tapered wings (TR 0.6 and 0.2) produced slightly more lift and less induced drag
 NACA 2415 airfoil, Re = 1,000,000, α from −3° to +21° (3° increments). Fluent-computed C_L, C_D, and C_L/C_D were plotted directly against XFLR5 results, with velocity/pressure contours captured at 0° and 10° AoA.
 
 ![Fluent vs XFLR5 Comparison](images/Fluent-vs-XFLR5-Graph.png)
-![Fluent Contours 0 and 10 deg]()
+![CL/CD vs AoA](images/Cl_Cd-vs-AoA.png)
+![Fluent Contours 0 deg](images/velocity-contor-0deg.png)
+![Fluent Contours 10 deg](images/velocity-contor-10deg.png)
+
 
 ### Result — and an honest discrepancy
 XFLR5 produced the expected lift curve: C_L rising from ~0.24 near 0° to a peak of ~1.53 around 18° before dropping off (stall behavior). **Fluent's C_L stayed nearly flat across the entire sweep (~0.17–0.19), showing almost no sensitivity to angle of attack.** This is not physically realistic for an airfoil across that AoA range and points to a likely issue in the Fluent setup — possibilities include insufficient mesh refinement near the leading edge, incomplete convergence, or a boundary condition/reference value error rather than a real aerodynamic effect. Rather than paper over it, this is flagged here as a limitation and a lesson in cross-validating CFD output against a lower-order method before trusting it.
@@ -94,8 +99,8 @@ XFLR5 produced the expected lift curve: C_L rising from ~0.24 near 0° to a peak
 `XFLR5` `ANSYS Fluent` `Microsoft Excel`
 
 ## 📁 Repo Contents
-- `Rectangular_wing_-_AR_5_10_15_Excel_Data.pdf` — Part A raw data and analysis
-- `Tapered_Wing_-_AR_5_10_15_Excel_Data.pdf` — Part B raw data and analysis
-- `Wing_Aspect_Ratio_Charts_and_Discussion.pdf` — Part A/B charts and Part C discussion
-- `ANSYS_Fluent_Wing_Data.pdf` — Bonus Fluent vs. XFLR5 validation
-- `images/` — comparison charts and Fluent contour screenshots
+- `Rectangular wing - AR 5_10_15 Excel Data.pdf` — Part A raw data and analysis
+- `Tapered Wing - AR 5_10_15 Excel Data.pdf` — Part B raw data and analysis
+- `Wing Aspect Ratio Charts and Discussion.pdf` — Part A/B charts and Part C discussion
+- `ANSYS Fluent Wing Data.pdf` — Bonus Fluent vs. XFLR5 validation
+- `images` — comparison charts and Fluent contour screenshots
