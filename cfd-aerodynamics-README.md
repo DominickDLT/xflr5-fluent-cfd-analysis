@@ -1,6 +1,15 @@
-# ✈️ Aerodynamic & CFD Analysis of Wings and Airfoils
+# ✈️ Aerodynamic Analysis of Wings and Airfoils
 
-Comparative aerodynamic study of wing geometry effects using lifting-line theory (XFLR5), validated against 2D CFD simulation (ANSYS Fluent).
+**Course:** EAS 3101 – Fundamentals of Aerodynamics, University of Central Florida
+**Team:** Blake Paoli, Jacob Quirindongo & Dominick De La Torre
+**Due:** August 1, 2026
+
+Comparative aerodynamic study of wing geometry effects using lifting-line theory in XFLR5, with a bonus CFD validation against ANSYS Fluent.
+
+🎥 **Videos:**
+- [Part A — Aspect Ratio Study](https://youtu.be/1hPLcjjO6WQ)
+- [Part B — Taper Ratio Study](https://youtu.be/HTDpyH3U5Is)
+- [Part C (Bonus) — Fluent CFD Validation](https://youtu.be/cprLUsbtQPc)
 
 ---
 
@@ -8,19 +17,27 @@ Comparative aerodynamic study of wing geometry effects using lifting-line theory
 
 Three rectangular wings (NACA 2415 airfoil, no twist/dihedral, 1 m chord) were modeled in XFLR5 at 50 m/s using lifting-line theory, sweeping angle of attack from −5° to 15°:
 
-| Wing | Aspect Ratio | Planform |
-|---|---|---|
-| 1a | 5 | Rectangular |
-| 2a | 10 | Rectangular |
-| 3a | 15 | Rectangular |
+| Wing | Aspect Ratio |
+|---|---|
+| 1a | 5 |
+| 2a | 10 |
+| 3a | 15 |
 
-**Generated for each wing:** Cl vs. α, Cl/Cd vs. α, Cd vs. α, Oswald efficiency (e) vs. α, and spanwise distributions (local Cl, induced/effective angle of attack, downwash velocity, induced Cd) at α = 5°.
+![AR Comparison Charts](images/AR-comparison-charts.png)
 
-![Cl vs Alpha - AR Comparison](images/cl-alpha-AR.png)
-![Oswald Efficiency - AR Comparison](images/oswald-AR.png)
-*Add: comparison plots for AR 5/10/15*
+**At 5° angle of attack:**
 
-**Lift curve slope** was tabulated from XFLR5 results and compared against the theoretical finite-wing lift curve slope equation from lecture.
+| | AR = 5 | AR = 10 | AR = 15 |
+|---|---|---|---|
+| Total C_L | 0.549 | 0.642 | 0.682 |
+| Oswald efficiency (e) | 0.967 | 0.927 | 0.894 |
+| Induced angle of attack | 2.00° | 1.17° | 0.83° |
+| Induced C_D | 0.0198 | 0.0142 | 0.0110 |
+
+**Lift curve slope** (XFLR5 vs. theoretical, per lecture equations) showed close agreement, with error increasing slightly at higher aspect ratio — 4.3% (AR 5), 5.9% (AR 10), and 6.5% (AR 15).
+
+### Findings
+Higher aspect ratio wings produced less induced drag and a better lift-to-drag ratio — the AR 15 wing was the most aerodynamically efficient, while AR 5 generated the most drag. However, a very high aspect ratio isn't automatically the best choice: longer wings are heavier, harder to manufacture, and see more bending moment at the root. **AR 10 was identified as the best balance** of aerodynamic performance and structural practicality.
 
 ---
 
@@ -34,47 +51,42 @@ Three tapered wings (AR = 10, NACA 2415, 1 m root chord) were analyzed the same 
 | 2b | 0.6 |
 | 3b | 1.0 (rectangular baseline) |
 
-![Cl vs Alpha - Taper Comparison](images/cl-alpha-taper.png)
-*Add: comparison plots for TR 0.2/0.6/1.0*
+![Taper Ratio Comparison Charts](images/TR-comparison-charts.png)
+
+**Lift curve slope**, XFLR5 vs. theoretical — agreement was much tighter here than in Part A, within ~2% across all three taper ratios.
+
+**At 5° angle of attack:**
+
+| | TR = 0.2 | TR = 0.6 | TR = 1.0 |
+|---|---|---|---|
+| Total C_L | 0.651 | 0.653 | 0.648 |
+| Oswald efficiency (e) | 0.975 | **0.977** | 0.927 |
+| Induced C_D | 0.0138 | 0.0139 | 0.0144 |
+
+### Findings
+Tapered wings (TR 0.6 and 0.2) produced slightly more lift and less induced drag than the rectangular baseline, with better Oswald efficiency — their lift distribution sat closer to the ideal elliptical shape. The TR 0.2 wing performed well numerically, but its very narrow tip raises manufacturability concerns and could cause less predictable stall behavior. **TR 0.6 delivered comparable performance without that narrow-tip drawback.**
 
 ---
 
-## Part C — Discussion
+## Part C — Design Recommendation
 
-**Aspect ratio effects:** Higher AR wings showed reduced induced drag and higher Oswald efficiency, at the cost of increased structural bending moment for a fixed span-loading — a classic long/thin vs. short/stiff tradeoff.
+**Selected design: AR 10, TR 0.6** — chosen as the best balance of lift, drag, efficiency, and manufacturability for a low-speed airplane application.
 
-**Taper ratio effects:** Moderate taper (TR ≈ 0.4–0.6) approximates the elliptical lift distribution most closely, minimizing induced drag without the manufacturing complexity of a true elliptical planform.
-
-**Design recommendation:** For a low-speed application, AR 10 with TR ≈ 0.6 was identified as the best balance of induced-drag performance, structural practicality, and manufacturability.
-
----
-
-## 🔬 CFD Validation (ANSYS Fluent)
-
-**NACA 2415 airfoil**, Re = 1,000,000, α from −3° to +21° (3° increments):
-- Cl, Cd, and Cl/Cd vs. α plotted and compared directly against XFLR5 results
-- Velocity and pressure contours captured at 0° and 10° AoA
-
-![Fluent vs XFLR5 Cl Comparison](images/fluent-xflr5-cl.png)
-![Velocity Contour 10deg](images/velocity-contour-10deg.png)
-*Add: Cl/Cd comparison plots and contour screenshots*
-
-**2D flat plate boundary layer** (L = 100 cm, U∞ = 2 m/s, laminar, viscous):
-- Velocity/pressure contours, boundary layer profiles at x = 25/50/75 cm compared to Blasius theory
-- Wall shear stress, skin friction coefficient, and drag coefficient vs. theoretical predictions
-
-**2D cylinder flow** (D = 1 m, inviscid / laminar / turbulent):
-- Velocity contours with streamlines, pressure contours, surface velocity and Cp distributions, and drag coefficients across all three flow regimes, compared against experimental drag data
-
-![Cylinder Wake Comparison](images/cylinder-wake.png)
-*Add: streamline/wake comparison across inviscid, laminar, turbulent cases*
+- At 5° AoA: C_L ≈ 0.653, induced C_D ≈ 0.0139, Oswald efficiency ≈ 0.977 (the highest among all taper ratios tested)
+- More efficient than AR 5 (lower induced drag) and more practical than AR 15 (shorter span, less structural demand)
+- The wider tip versus the TR 0.2 design supports easier manufacturing and better handling near stall — relevant during low-speed takeoff and landing
 
 ---
 
-## 🎥 Videos
-- [Wing 2a geometry + XFLR5 workflow](#) — *add YouTube link*
-- [Wing 2b geometry + XFLR5 workflow](#) — *add YouTube link*
-- [NACA 2415 Fluent workflow, Re = 1,000,000](#) — *add YouTube link*
+## 🔬 Bonus — CFD Validation in ANSYS Fluent
+
+NACA 2415 airfoil, Re = 1,000,000, α from −3° to +21° (3° increments). Fluent-computed C_L, C_D, and C_L/C_D were plotted directly against XFLR5 results, with velocity/pressure contours captured at 0° and 10° AoA.
+
+![Fluent vs XFLR5 Comparison](images/fluent-vs-xflr5.png)
+![Fluent Contours 0 and 10 deg](images/fluent-contours.png)
+
+### Result — and an honest discrepancy
+XFLR5 produced the expected lift curve: C_L rising from ~0.24 near 0° to a peak of ~1.53 around 18° before dropping off (stall behavior). **Fluent's C_L stayed nearly flat across the entire sweep (~0.17–0.19), showing almost no sensitivity to angle of attack.** This is not physically realistic for an airfoil across that AoA range and points to a likely issue in the Fluent setup — possibilities include insufficient mesh refinement near the leading edge, incomplete convergence, or a boundary condition/reference value error rather than a real aerodynamic effect. Rather than paper over it, this is flagged here as a limitation and a lesson in cross-validating CFD output against a lower-order method before trusting it.
 
 ---
 
@@ -82,8 +94,8 @@ Three tapered wings (AR = 10, NACA 2415, 1 m root chord) were analyzed the same 
 `XFLR5` `ANSYS Fluent` `Microsoft Excel`
 
 ## 📁 Repo Contents
-- `XFLR5_Wing_Analysis.pdf` — full Part A/B/C writeup
-- `Fluent_Airfoil_Bonus.pdf` — NACA 2415 Fluent vs. XFLR5 comparison
-- `Fluent_FlatPlate_Cylinder.pdf` — boundary layer and bluff-body simulations
-- `Wing_Analysis_Data.xlsx` — raw data and generated plots
-- `images/` — contour screenshots and comparison plots
+- `Rectangular_wing_-_AR_5_10_15_Excel_Data.pdf` — Part A raw data and analysis
+- `Tapered_Wing_-_AR_5_10_15_Excel_Data.pdf` — Part B raw data and analysis
+- `Wing_Aspect_Ratio_Charts_and_Discussion.pdf` — Part A/B charts and Part C discussion
+- `ANSYS_Fluent_Wing_Data.pdf` — Bonus Fluent vs. XFLR5 validation
+- `images/` — comparison charts and Fluent contour screenshots
